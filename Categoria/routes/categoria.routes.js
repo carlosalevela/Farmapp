@@ -24,8 +24,8 @@ const {ActualizarCategoria, EliminarCategoria, AgregarCategoria, VerCategoria}=r
 
 router.get('/', VerCategoria);
 router.post('/', AgregarCategoria);
-router.put('/', ActualizarCategoria);
-router.delete('/', EliminarCategoria);
+router.put('/:id', ActualizarCategoria);
+router.delete('/:id', EliminarCategoria);
 
 
 module.exports=router;
