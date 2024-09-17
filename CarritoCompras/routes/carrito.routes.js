@@ -23,7 +23,7 @@ const {AplicarDescuento, GenerarRecibo, RealizarPago}=require('../controllers/ca
  */
 
 router.get('/', AplicarDescuento);
-router.get('/', GenerarRecibo);
+router.post('/', GenerarRecibo);
 router.get('/', RealizarPago);
 
 
