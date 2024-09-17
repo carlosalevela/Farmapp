@@ -16,14 +16,15 @@ const router=Router();
  * Importacion de metodos
  */
 
-const {ConfirmarDisponibilidad, ActualizarCantidad}=require('../controllers/inventario.controller');
+const {ConfirmarDisponibilidad, ActualizarCantidad, AgregarCantidad}=require('../controllers/inventario.controller');
 
 /**
  * Rutas
  */
 
 router.get('/', ConfirmarDisponibilidad);
-router.put('/', ActualizarCantidad);
+router.put('/:id', ActualizarCantidad);
+router.post('/', AgregarCantidad)
 
 
 module.exports=router;
