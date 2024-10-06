@@ -1,0 +1,11 @@
+
+services: 
+
+  user_api:
+    build:
+      context: ./Apis
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Apis/usuario:/usr/userAPI
+      

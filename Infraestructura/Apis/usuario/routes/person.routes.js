@@ -3,7 +3,7 @@
  * @version 0.0.1
  * 
  * 
- * rutas para usuario
+ * rutas para personas
  * 
  */
 
@@ -16,19 +16,14 @@ const router=Router();
  * Importacion de metodos
  */
 
-const {RegistrarUsuario, IniciarSesion, Login}=require('../controllers/usuario.controller');
+const {RegistrarPerson, IniciarSesion}=require('../controllers/person.controller');
 
 /**
  * Rutas
  */
 
-router.post('/', RegistrarUsuario);
+router.post('/', RegistrarPerson);
 router.get('/', IniciarSesion);
-router.post('/login', Login);
-
-
-
-
 
 
 module.exports=router;
