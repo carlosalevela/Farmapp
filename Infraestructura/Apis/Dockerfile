@@ -22,16 +22,15 @@ RUN mkdir -p /usr/userAPI
 
 WORKDIR /usr/userAPI
 
-# Copiar los archivos de usuario y prisma
+
 COPY usuario/package*.json /usr/userAPI
-COPY usuario/prisma /usr/userAPI/prisma  
 
 RUN npm install
 
-RUN npm install dotenv --save-d
+RUN npm install dotenv --save-dev
 
-# Ejecutar prisma generate con la ruta correcta
-RUN prisma generate --schema=/usr/userAPI/prisma/schema.prisma
+
+RUN prisma generate 
 
 CMD ["nodemon", "app.js"]
 
