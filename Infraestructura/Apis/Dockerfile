@@ -29,7 +29,6 @@ RUN npm install
 
 RUN npm install dotenv --save-dev
 
-
 RUN prisma generate 
 
 CMD ["nodemon", "app.js"]
