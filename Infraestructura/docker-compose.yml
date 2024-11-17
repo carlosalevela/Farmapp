@@ -28,9 +28,7 @@ services:
       - dev_network
 
   postgres:
-    build:
-      context: .
-      dockerfile: Dockerfile.logs
+    image: postgres:17
     container_name: user_db_dev
     deploy:
       resources:
