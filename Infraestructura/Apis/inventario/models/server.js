@@ -35,6 +35,7 @@ class Server {
 
     routes(){
         this.app.use('/inventario', require('../routes/inventario.routes'));
+        this.app.use('/producto', require('../routes/producto.routes'));
     }
 
     listen(){

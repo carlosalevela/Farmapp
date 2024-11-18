@@ -11,9 +11,8 @@
  * Importando Variables
  * 
  */
-
-const express = require ('express');
-
+const express = require('express');
+const cors = require('cors'); // Importa el paquete cors
 
 /**
  * @class Server 
@@ -21,27 +20,34 @@ const express = require ('express');
  */
 
 class Server {
-    constructor(){
-        this.app=express();
-        this.port=3000;
-        this.path='/api/';
+    constructor() {
+        this.app = express();
+        this.port = 3000;
+        this.path = '/api/';
         this.middlewares();
         this.routes();
     }
 
-    middlewares(){
+    middlewares() {
+        // Configuración de CORS para permitir solicitudes desde tu frontend
+        this.app.use(cors({
+            origin: 'http://localhost:3003', // Asegúrate de que esta URL sea la del frontend
+            methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+            allowedHeaders: ['Content-Type', 'Authorization'], // Headers permitidos
+        }));
+        
         this.app.use(express.json());
     }
 
-    routes(){
+    routes() {
         this.app.use('/producto', require('../routes/producto.routes'));
     }
 
-    listen(){
+    listen() {
         this.app.listen(this.port, () => {
             console.log(`Servidor funcionando en el puerto: ${this.port}`); 
         });
     }
 }
 
-module.exports=Server;
+module.exports = Server;
