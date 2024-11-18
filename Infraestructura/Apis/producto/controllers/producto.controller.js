@@ -1,15 +1,8 @@
-/**
- * @author Lina Viveros - Carlos Alegria
- * @version 0.0.1
- * 
- * Controlador de producto para interactuar con la base de datos usando Prisma.
- */
-
 const { response, request } = require('express');
-const prisma = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 
-// Crear una instancia del cliente de Prisma
-const prismaClient = new prisma.PrismaClient();
+// Crear una instancia del cliente Prisma
+const prisma = new PrismaClient();
 
 // Agregar un producto
 const AgregarProducto = async (req = request, res = response) => {
@@ -23,23 +16,23 @@ const AgregarProducto = async (req = request, res = response) => {
   }
 
   try {
-    const nuevoProducto = await prismaClient.producto.create({
+    const nuevoProducto = await prisma.producto.create({
       data: {
         nombre,
-        precio: parseFloat(precio), // Convertir precio a número
-        cantidad: parseInt(cantidad), // Convertir cantidad a número
+        precio: parseFloat(precio),
+        cantidad: parseInt(cantidad),
         descripcion,
       }
     });
 
     res.status(201).json({
-      msg: 'Producto agregado',
+      msg: 'Producto agregado exitosamente',
       producto: nuevoProducto
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      msg: 'Error al agregar el producto'
+      msg: 'Error al agregar el producto',
     });
   }
 };
@@ -47,12 +40,12 @@ const AgregarProducto = async (req = request, res = response) => {
 // Ver todos los productos
 const VerProductos = async (req = request, res = response) => {
   try {
-    const productos = await prismaClient.producto.findMany();
+    const productos = await prisma.producto.findMany();
     res.json(productos);
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      msg: 'Error al obtener los productos'
+      msg: 'Error al obtener los productos',
     });
   }
 };
@@ -62,13 +55,13 @@ const VerProducto = async (req = request, res = response) => {
   const { idproducto } = req.params;
 
   try {
-    const producto = await prismaClient.producto.findUnique({
-      where: { idproducto }
+    const producto = await prisma.producto.findUnique({
+      where: { idproducto: parseInt(idproducto) },
     });
 
     if (!producto) {
       return res.status(404).json({
-        msg: 'Producto no encontrado'
+        msg: 'Producto no encontrado',
       });
     }
 
@@ -76,7 +69,7 @@ const VerProducto = async (req = request, res = response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      msg: 'Error al obtener el producto'
+      msg: 'Error al obtener el producto',
     });
   }
 };
@@ -86,18 +79,18 @@ const EliminarProducto = async (req = request, res = response) => {
   const { idproducto } = req.params;
 
   try {
-    const productoEliminado = await prismaClient.producto.delete({
-      where: { idproducto }
+    const productoEliminado = await prisma.producto.delete({
+      where: { idproducto: parseInt(idproducto) },
     });
 
     res.json({
-      msg: 'Producto eliminado',
-      producto: productoEliminado
+      msg: 'Producto eliminado exitosamente',
+      producto: productoEliminado,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      msg: 'Error al eliminar el producto'
+      msg: 'Error al eliminar el producto',
     });
   }
 };
@@ -108,24 +101,24 @@ const EditarProducto = async (req = request, res = response) => {
   const { nombre, precio, cantidad, descripcion } = req.body;
 
   try {
-    const productoEditado = await prismaClient.producto.update({
-      where: { idproducto },
+    const productoEditado = await prisma.producto.update({
+      where: { idproducto: parseInt(idproducto) },
       data: {
         nombre: nombre || undefined,
         precio: precio ? parseFloat(precio) : undefined,
         cantidad: cantidad ? parseInt(cantidad) : undefined,
-        descripcion: descripcion || undefined
-      }
+        descripcion: descripcion || undefined,
+      },
     });
 
     res.json({
-      msg: 'Producto actualizado',
-      producto: productoEditado
+      msg: 'Producto actualizado exitosamente',
+      producto: productoEditado,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      msg: 'Error al actualizar el producto'
+      msg: 'Error al actualizar el producto',
     });
   }
 };
@@ -133,7 +126,7 @@ const EditarProducto = async (req = request, res = response) => {
 module.exports = {
   AgregarProducto,
   VerProductos,
+  VerProducto,
   EliminarProducto,
   EditarProducto,
-  VerProducto
 };

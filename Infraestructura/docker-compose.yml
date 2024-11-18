@@ -36,8 +36,6 @@ services:
       - "3000:3000"  # Expone el puerto de producto
     volumes:
       - ./Apis/producto:/usr/productAPI
-    environment:
-      - DATABASE_URL=postgresql://postgres_producto:12345@producto_db_dev:5433/products?schema=public
     depends_on:
       - postgres_producto  # Depende de la base de datos de productos
     networks:

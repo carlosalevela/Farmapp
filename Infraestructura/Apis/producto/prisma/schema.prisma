@@ -15,7 +15,7 @@ datasource db {
 }
 
 model Producto {
-  idproducto  String  @id @default(uuid()) // Genera un ID único por defecto
+  idproducto    Int     @id @default(autoincrement()) // Genera un ID único por defecto
   nombre      String
   precio      Float
   cantidad    Int
