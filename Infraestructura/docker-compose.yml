@@ -21,7 +21,7 @@ services:
           cpus: "0.1"
           memory: 256M
     ports:
-      - "3000-3010:3000"
+      - "3000:3000"
     volumes:
       - ./Apis/usuario:/usr/userAPI
     networks:
@@ -33,13 +33,46 @@ services:
       dockerfile: Dockerfile.producto  # Referencia el Dockerfile de producto
     container_name: producto_container
     ports:
-      - "3000:3000"  # Expone el puerto de producto
+      - "3001:3000"  # Expone el puerto de producto
     volumes:
       - ./Apis/producto:/usr/productAPI
     depends_on:
       - postgres_producto  # Depende de la base de datos de productos
     networks:
       - dev_network
+    
+  inventario:
+    build: 
+      context: ./Apis
+      dockerfile: Dockerfile.inventario
+    container_name: invantario_container
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./Apis/inventario:/usr/inventarioAPI
+    depends_on:
+      - postgres_inventario
+    networks:
+      - dev_network
+
+  postgres_inventario:
+    image: postgres:17
+    container_name: inventario_db_dev
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 4GB
+    ports:
+      - "5434:5432"  # Mapea el puerto local 5434 al puerto interno 5432
+    volumes:
+      - ./inventario_data_dev:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 12345 
+    networks:
+      - dev_network
+
+
 
   postgres_producto:
     image: postgres:17

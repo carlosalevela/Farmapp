@@ -7,24 +7,29 @@
  * 
  */
 
-const {Router}=require('express');
+const express = require('express');
+const router = express.Router();
+const {
+    createInventario,
+    getInventarios,
+    getInventarioById,
+    updateInventario,
+    deleteInventario,
+} = require('../controllers/inventario.controller');
 
-const router=Router();
+// Ruta para crear un inventario
+router.post('/inventarios', createInventario);
 
+// Ruta para obtener todos los inventarios
+router.get('/inventarios', getInventarios);
 
-/**
- * Importacion de metodos
- */
+// Ruta para obtener un inventario por ID
+router.get('/inventarios/:id', getInventarioById);
 
-const {ConfirmarDisponibilidad, ActualizarCantidad, AgregarCantidad}=require('../controllers/inventario.controller');
+// Ruta para actualizar un inventario por ID
+router.put('/inventarios/:id', updateInventario);
 
-/**
- * Rutas
- */
+// Ruta para eliminar un inventario por ID
+router.delete('/inventarios/:id', deleteInventario);
 
-router.get('/', ConfirmarDisponibilidad);
-router.put('/:id', ActualizarCantidad);
-router.post('/', AgregarCantidad)
-
-
-module.exports=router;
+module.exports = router;

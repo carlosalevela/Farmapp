@@ -16,10 +16,21 @@ datasource db {
 
 model Producto {
   idproducto    Int     @id @default(autoincrement()) // Genera un ID único por defecto
-  nombre      String
-  precio      Float
-  cantidad    Int
-  descripcion String
-  createdAt   DateTime @default(now())  // Fecha de creación
-  updatedAt   DateTime @updatedAt      // Fecha de actualización
+  nombre        String
+  precio        Float
+  cantidad      Int
+  descripcion   String
+  createdAt     DateTime @default(now())  // Fecha de creación
+  updatedAt     DateTime @updatedAt      // Fecha de actualización
+  inventarios   Inventario[]  // Relación uno a muchos, un producto puede tener muchos inventarios
+}
+
+model Inventario {
+  id             Int       @id @default(autoincrement())
+  name           String
+  cantidad       Int
+  productoId     Int
+  producto       Producto  @relation(fields: [productoId], references: [idproducto]) // Relación con Producto
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }

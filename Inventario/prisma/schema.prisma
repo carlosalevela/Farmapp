@@ -3,26 +3,39 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "sqlite"  // O el proveedor que estés utilizando
   url      = env("DATABASE_URL")
 }
 
-model Inventario {
-  id    Int    @id @default(autoincrement())
-  name  String
-  cantidad Int @default(0)
-  categoria Categoria []
+model Producto {
+  idproducto    Int         @id @default(autoincrement()) // ID del producto
+  nombre        String
+  precio        Float
+  cantidad      Int
+  descripcion   String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  inventarios   Inventario[] // Relación con el inventario
+}
 
+model Inventario {
+  id           Int         @id @default(autoincrement()) // ID del inventario
+  name         String      // Nombre del inventario
+  cantidad     Int         @default(0)  // Cantidad de productos en el inventario
+  productoId   Int         // Relación con Producto
+  producto     Producto    @relation(fields: [productoId], references: [idproducto]) // Relación con Producto
+  categorias   Categoria[] // Relación con las categorías
 }
 
 model Categoria {
-    id    Int    @id @default(autoincrement())
-    productoId Int
-    inventario Inventario @relation(fields: [inventarioID], references: [id])
-    inventarioID Int
-
+  id           Int         @id @default(autoincrement()) // ID de la categoría
+  nombre       String      // Nombre de la categoría
+  inventarioId Int         // Relación con Inventario
+  inventario   Inventario  @relation(fields: [inventarioId], references: [id]) // Relación con Inventario
 }
 

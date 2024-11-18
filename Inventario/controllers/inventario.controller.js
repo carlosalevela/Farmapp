@@ -7,73 +7,102 @@
  * 
  */
 
-const {response, request} =require('express');
-const {PrismaClient} = require ('@prisma/client');
-
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
-
-const ConfirmarDisponibilidad = async (req=request, res=response)=>{
-    const inventario=await prisma.inventario.findMany()
-
-    .catch(err=>{
-        return err.message;
-    }).finally((async()=>{
-        await prisma.$disconnect();
-    }));
-
-
-    res.json({
-        inventario
+// Crear un inventario
+const createInventario = async (req, res) => {
+    const { name, cantidad, productoId } = req.body;
+    try {
+    const inventario = await prisma.inventario.create({
+        data: {
+        name,
+        cantidad,
+        productoId,
+    },
     });
-} ;
-const ActualizarCantidad = async (req=request, res=response)=>{
-    const {id }=req.params;
+    res.status(201).json(inventario);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al crear el inventario' });
+  }
+};
 
-    const {name, cantidad }= req.body;
-
-    const result = await prisma.inventario.update({
-        where:{
-            id:Number(id)
-        },
-        data:{
-            name, 
-            cantidad
-        }
-    }).catch(err=>{
-        return err.message;
-    }).finally((async()=>{
-        await prisma.$disconnect();
-    }));
-    
-    res.json({
-        result
+// Obtener todos los inventarios
+const getInventarios = async (req, res) => {
+  try {
+    const inventarios = await prisma.inventario.findMany({
+      include: {
+        producto: true, // Incluye el producto relacionado
+        categorias: true, // Incluye las categorías relacionadas
+      },
     });
-} ;
-const AgregarCantidad= async (req=request, res=response)=>{
-    const {name, cantidad} = req.body;
+    res.status(200).json(inventarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener los inventarios' });
+  }
+};
 
-    const result = await prisma.inventario.create({
-        data:{
-            name,
-            cantidad
-        }
-    }).catch(err=>{
-        return err.message;
-    }).finally((async()=>{
-        await prisma.$disconnect();
-    }));
-    
-    res.json ({
-        result
-    })
-}
+// Obtener un inventario por ID
+const getInventarioById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const inventario = await prisma.inventario.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        producto: true,
+        categorias: true,
+      },
+    });
+    if (!inventario) {
+      return res.status(404).json({ error: 'Inventario no encontrado' });
+    }
+    res.status(200).json(inventario);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener el inventario' });
+  }
+};
 
+// Actualizar un inventario
+const updateInventario = async (req, res) => {
+  const { id } = req.params;
+  const { name, cantidad, productoId } = req.body;
+  try {
+    const inventario = await prisma.inventario.update({
+      where: { id: parseInt(id) },
+      data: {
+        name,
+        cantidad,
+        productoId,
+      },
+    });
+    res.status(200).json(inventario);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al actualizar el inventario' });
+  }
+};
+
+// Eliminar un inventario
+const deleteInventario = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.inventario.delete({
+      where: { id: parseInt(id) },
+    });
+    res.status(200).json({ message: 'Inventario eliminado correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al eliminar el inventario' });
+  }
+};
 
 module.exports = {
-    ConfirmarDisponibilidad,
-    ActualizarCantidad,
-    AgregarCantidad
-
+  createInventario,
+  getInventarios,
+  getInventarioById,
+  updateInventario,
+  deleteInventario,
 };
