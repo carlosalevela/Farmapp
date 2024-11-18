@@ -27,6 +27,42 @@ services:
     networks:
       - dev_network
 
+  producto:
+    build:
+      context: ./Apis  # Ajusta según la estructura de carpetas
+      dockerfile: Dockerfile.producto  # Referencia el Dockerfile de producto
+    container_name: producto_container
+    ports:
+      - "3000:3000"  # Expone el puerto de producto
+    volumes:
+      - ./Apis/producto:/usr/productAPI
+    environment:
+      - DATABASE_URL=postgresql://postgres_producto:12345@producto_db_dev:5433/products?schema=public
+    depends_on:
+      - postgres_producto  # Depende de la base de datos de productos
+    networks:
+      - dev_network
+
+  postgres_producto:
+    image: postgres:17
+    container_name: producto_db_dev
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 4GB
+        reservations:
+          cpus: "0.1"
+          memory: 1GB
+    ports:
+      - "5433:5432"  # Usamos un puerto diferente (5433) para evitar conflicto con la base de datos de usuario
+    volumes:
+      - ./producto_data_dev:/var/lib/postgresql/data  # Volumen para persistir los datos de productos
+    environment:
+      POSTGRES_PASSWORD: 12345
+    networks:
+      - dev_network
+
   postgres:
     image: postgres:17
     container_name: user_db_dev
@@ -43,6 +79,8 @@ services:
     volumes:
       - ./users_data_dev:/var/lib/postgresql/data
       - ./pg_logs:/var/log/postgresql
+    environment:
+      POSTGRES_PASSWORD: 12345
     networks:
       - dev_network
 
