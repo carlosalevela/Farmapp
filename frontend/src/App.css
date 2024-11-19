@@ -1,5 +1,9 @@
+/* App.css */
+
+/* Estilos generales */
 .App {
   text-align: center;
+  font-family: Arial, sans-serif;
 }
 
 .App-logo {
@@ -14,20 +18,125 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #007BFF; /* Color Azul */
+  height: 60px; /* Hacemos el header más pequeño */
   display: flex;
-  flex-direction: column;
+  justify-content: space-between; /* Alineamos los elementos a los extremos */
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 0 20px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Estilo para el título */
+.App-title {
+  font-size: 1.5rem; /* Reducimos el tamaño del texto */
+  font-weight: bold;
+  color: white;
+  margin: 0;
 }
 
+/* Contenedor de botones de navegación */
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+/* Estilos para los botones de navegación */
+.nav-button {
+  padding: 8px 12px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  background-color: #004080; /* Azul más oscuro en hover */
+}
+
+/* Contenedor de productos en la página de inicio */
+.product-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Estilo para las tarjetas de productos en el inicio */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Estilo de las tarjetas de productos */
+.product-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-card h3 {
+  color: #2d3e50;
+  margin-bottom: 10px;
+}
+
+.product-card p {
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Estilos para los botones */
+.product-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.edit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #e53935;
+}
+
+/* Estilos para estado de carga */
+.loading, .error {
+  text-align: center;
+  font-size: 18px;
+  color: #ff6347;
+  margin-top: 50px;
+}
+
+/* Animación para el logo (si lo deseas usar) */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

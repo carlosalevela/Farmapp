@@ -31,9 +31,9 @@ class Server {
     middlewares() {
         // Configuración de CORS para permitir solicitudes desde tu frontend
         this.app.use(cors({
-            origin: 'http://localhost:3003', // Asegúrate de que esta URL sea la del frontend
-            methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
-            allowedHeaders: ['Content-Type', 'Authorization'], // Headers permitidos
+            origin: 'http://localhost:3003', 
+            methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+            allowedHeaders: ['Content-Type', 'Authorization'], 
         }));
         
         this.app.use(express.json());

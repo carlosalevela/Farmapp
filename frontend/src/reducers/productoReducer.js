@@ -1,35 +1,41 @@
 // src/reducers/productoReducer.js
 
-const initialState = {
+import {
+    CARGAR_PRODUCTOS,
+    OBTENER_PRODUCTOS_EXITO,
+    OBTENER_PRODUCTOS_ERROR,
+    ADD_PRODUCTO,
+    EDIT_PRODUCTO,
+    DELETE_PRODUCTO,
+  } from '../types/types';
+  
+  const initialState = {
     productos: [],
     loading: false,
     error: null,
   };
   
-  // Acción de ejemplo: obtener productos
   const productoReducer = (state = initialState, action) => {
     switch (action.type) {
-      case 'FETCH_PRODUCTOS_REQUEST':
+      case CARGAR_PRODUCTOS:
+        return { ...state, loading: true };
+      case OBTENER_PRODUCTOS_EXITO:
+        return { ...state, loading: false, productos: action.payload };
+      case OBTENER_PRODUCTOS_ERROR:
+        return { ...state, loading: false, error: action.payload };
+      case ADD_PRODUCTO:
+        return { ...state, productos: [...state.productos, action.payload] };  // Agregar el nuevo producto
+      case EDIT_PRODUCTO:
         return {
           ...state,
-          loading: true,
+          productos: state.productos.map((producto) =>
+            producto.id === action.payload.id ? action.payload : producto
+          ),  // Editar el producto existente
         };
-      case 'FETCH_PRODUCTOS_SUCCESS':
+      case DELETE_PRODUCTO:
         return {
           ...state,
-          loading: false,
-          productos: action.payload, // Actualiza el estado con los productos obtenidos
-        };
-      case 'FETCH_PRODUCTOS_FAILURE':
-        return {
-          ...state,
-          loading: false,
-          error: action.payload, // Guarda el error si la carga falla
-        };
-      case 'ADD_PRODUCTO':
-        return {
-          ...state,
-          productos: [...state.productos, action.payload], // Agrega un nuevo producto al array
+          productos: state.productos.filter((producto) => producto.id !== action.payload),  // Eliminar el producto
         };
       default:
         return state;
