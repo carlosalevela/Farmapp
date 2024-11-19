@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addProducto } from '../actions/productoActions';
-import { fetchProductos } from '../actions/productoActions'; // Asegúrate de importar la acción para cargar productos
+import { addProducto, fetchProductos } from '../actions/productoActions'; // Asegúrate de importar ambas acciones
+import './AgregarProducto.css';
+
 
 const AgregarProducto = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const AgregarProducto = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Enviar el producto al backend
     dispatch(addProducto(producto)).then(() => {
       // Después de agregar, recargar la lista de productos
@@ -39,15 +40,16 @@ const AgregarProducto = () => {
   };
 
   return (
-    <div>
+    <div className="agregar-producto-container">
       <h1>Agregar Nuevo Producto</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="agregar-producto-form">
         <input
           type="text"
           name="nombre"
           value={producto.nombre}
           onChange={handleChange}
           placeholder="Nombre del Producto"
+          required
         />
         <input
           type="number"
@@ -55,6 +57,7 @@ const AgregarProducto = () => {
           value={producto.precio}
           onChange={handleChange}
           placeholder="Precio"
+          required
         />
         <input
           type="number"
@@ -62,12 +65,15 @@ const AgregarProducto = () => {
           value={producto.cantidad}
           onChange={handleChange}
           placeholder="Cantidad"
+          required
         />
         <textarea
           name="descripcion"
           value={producto.descripcion}
           onChange={handleChange}
           placeholder="Descripción"
+          rows="4"
+          required
         />
         <button type="submit">Agregar Producto</button>
       </form>

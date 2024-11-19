@@ -1,0 +1,62 @@
+/* Estilos principales para la página de edición de producto */
+.editar-producto-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .editar-producto-container h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .editar-producto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Estilos para los campos de texto (input, textarea) */
+  .editar-producto-form input,
+  .editar-producto-form textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Estilo cuando los campos de entrada están en foco */
+  .editar-producto-form input:focus,
+  .editar-producto-form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Estilos para el botón */
+  .editar-producto-form button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Efecto al pasar el ratón por encima del botón */
+  .editar-producto-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Añadir un margen inferior a los campos */
+  .editar-producto-form input,
+  .editar-producto-form textarea {
+    margin-bottom: 15px;
+  }
+  

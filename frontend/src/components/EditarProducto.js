@@ -1,8 +1,8 @@
-// src/components/EditarProducto.js
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'; // useParams para obtener el id del producto
 import { fetchProductos, editProducto } from '../actions/productoActions'; // Importar acciones necesarias
+import './EditarProducto.css'; // Importar los estilos
 
 const EditarProducto = () => {
   const dispatch = useDispatch();
@@ -54,9 +54,9 @@ const EditarProducto = () => {
   };
 
   return (
-    <div>
+    <div className="editar-producto-container">
       <h1>Editar Producto</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="editar-producto-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="nombre"
